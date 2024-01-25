@@ -69,5 +69,58 @@
         </form>
       </div>
     </header>
+
+    <main>{% block main%} {% endblock %}</main>
+
+    <footer>
+      <div class="footer-items">
+        <div class="footer-item-logo">
+          <a href="/home" style="cursor: pointer"
+            ><img
+              src="{{url_for('static', filename='image/alx recipe logo.png')}}"
+              alt="Logo"
+          /></a>
+          <div class="social-media">
+            <a href="#"><i class="fa fa-linkedin-square"></i></a>
+            <a href="#"><i class="fa fa-twitter-square"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-link">
+          <ul>
+            <li><a href="/about">ABout Us</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="#home">Customer Support </a></li>
+          </ul>
+        </div>
+
+        <div class="footer-subscribe">
+          <div class="form">
+            <input class="form" type="email" placeholder="Email" required />
+          </div>
+          <div class="btn">
+            <button class="button" type="submit">
+              Subscribe <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p>@Johnny-Recipe 2024</p>
+    </footer>
   </body>
+
+  <script src="{{url_for('static', filename='js/app.js')}}"></script>
+  <script src="{{url_for(static, filename='js/validate.js')}}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const burgerMenu = document.querySelector('.icon');
+      const navLinks = document.querySelector('.nav-links');
+
+      burgerMenu.addEventListener('click', function() {
+        navLinks.classList.toggle('show');
+        navLinks.style.animation = 'fade-nav-in 1.5s';
+      });
+    });
+  </script>
 </html>
