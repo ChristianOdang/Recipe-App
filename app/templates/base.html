@@ -1,0 +1,73 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, inital-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css')}}"
+    />
+    <title>{% block title %} {% endblock %} - Reciple</title>
+  </head>
+  <body>
+    <header class="bg">
+      <nav class="topnav">
+        <div class="logo">
+          <a href="/home" style="cursor: pointer"
+            ><img
+              src="{{url_for('static', filename='images/alx recipe logo.png')}}"
+              alt="Logo"
+          /></a>
+        </div>
+        <div class="nav-items" id="myTopnav">
+          <ul class="nav-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/favourite">Browse</a></li>
+            <li><a href="#home">Discover</a></li>
+            <li class="cart-li">
+              <a id="cart" value="" class="cart">Cart </a>
+              <span id="cart-item" class="cart-item">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              </span>
+            </li>
+          </ul>
+          <div class="icon">
+            <a href="#"><i class="fa fa-bars"></i></a>
+          </div>
+        </div>
+      </nav>
+      <div class="dashboard">
+        <h1 class="header-title">Discover Recipe</h1>
+        <p class="header-paragraph">explore the secrete behind the taste</p>
+
+        <div class="alert" id="alert"></div>
+
+        <form>
+          <div class="header-form">
+            <input
+              type="text"
+              id="search"
+              name="saerch"
+              placeholder="Search recipe"
+            />
+            <select id="select-id" name="select">
+              <option value="0" selected="selected">Select Category</option>
+              <option value="1">Cuisine Type</option>
+              <option value="2">Diet</option>
+              <option value="3">Ingredients</option>
+            </select>
+            <button id="search-btn" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </header>
+  </body>
+</html>
