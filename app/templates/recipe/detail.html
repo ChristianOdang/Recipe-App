@@ -16,8 +16,28 @@
           <div class="detail-body-header">
             <h2>{{result['recipe']['label']}}</h2>
             <br>
-            
+            <p><i>Cuisine Type:</i> {{result['recipe']['cuisineType'][0]}}</p>
+            <p><i>Meal Type:</i> {{result['recipe']['mealType'][0]}}</p>
+          </div>
+          <div class="table-container">
+            <table>
+              <tr>
+                <th><h3>Ingredients</h3></th>
+              </tr>
+              {% for ingredients in result['recipe']['ingredients'] %}
+                <tr>
+                   <td><p>{{ingredients['text']}}</p></td>
+                </tr>
+              {% endfor %}
+
+            </table>
+          </div>
+          <div class='detail-btn'>
+            <button class="button" type="submit" id="fav-btn" value="{{result['recipe']['uri']}}"><i class="fa fa-heart"></i><br>Favourite</button>
+            <button class="button" id="cart-btn" value="{{result['recipe']['uri']}}" type="submit"><i class="fa fa-shopping-cart"></i><br>Cart</button>
           </div>
         </div>
      </div>
+  {% endfor %}
 </div>
+{%endblock%}
