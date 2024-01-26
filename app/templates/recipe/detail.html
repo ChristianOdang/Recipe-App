@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% block title%}Search{% endblock %}
+{% block main %}
+<div class="detail-header">
+  <h1><b style="color:#8FC646">Product </b>details</h1>
+</div>
+<div class="details">
+
+  {% for result in results['hits'] %}
+     <div class="detail-body-row">
+        <div class="details-body-row-img">
+           <img width=100% src="{{result['recipe']['image']['REGULAR']['url']}}" alt="Product image" />
+        </div>
+        <div class="detail-body-row-text">
+          <div class="detail-body-header">
+            <h2>{{result['recipe']['label']}}</h2>
+            <br>
+            
+          </div>
+        </div>
+     </div>
+</div>
