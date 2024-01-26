@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block title %}Search{% endblock %} {% block main %}
+<section class="top-recipe">
+  <div class="top-recipe-header">
+    <h1>
+      <b style="color: #8fc646">Your</b> Cart
+      <i class="fa fa-shopping-cart"></i>
+    </h1>
+  </div>
+
+  <div class="top-recipe-items">
+    {% for i in range(results_count|length) %}
+    <div class="top-recipe-item">
+      <img
+        class="cart-image"
+        src="{{results[i]['hit'][0]['recipe']['image']['SMALL']['url']}}"
+        alt="Recipe image"
+      />
+      <span class="cart-counter" id="cart-counter"></span>
+
+      <h2>
+        <form action="/details" method="POST" style="margin: 0; padding: 0">
+          <input
+            type="text"
+            name="item-deatils"
+            value="{{results[i]['hits'][0]['recipe']['url']}}"
+            hidden
+          />
+          <a
+            id="cart-uri"
+            href="#"
+            onclick="this.parentNode.submit()"
+            style="color:black; hover::color:green"
+          >
+            {{results[i]['hits'][0]['recipe']['label']}}
+          </a>
+        </form>
+      </h2>
+      <p>Source: {{results[i]['hits'][0]['recipe']['source']}} | {{results[i]['hits'][0]['recipe']['ingredients']| length}} Ingredients </p>
+      <div class="top-recipe-item-btn">
+        <button style="margin-right:.1rem" class="button" id="fav-btn" value="{{results[i]['hits'][0]['recipe']['uri']}}"><i class="fa fa-heart"></i><br>Favourite</button>
+        <button style="margin-left:.1rem" id='remove-cart-item-btn' value="{{results[i]['hits'[0]['recipe']['url']]}}" class="button"><i class="fa fa-shopping-cart"></i><br>Remove</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{%endblock%}
