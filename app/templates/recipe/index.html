@@ -38,5 +38,25 @@
       <section class="recipe-count">
           <div class="recipe-count-items">
               <h1>More than <em style="color:#8FC646">{{results['count']}}</em> Recipe</h1>
+              <p>explore the secrete behind best taste </p>
+              <div><button class="button" type="submit">View All <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></button></div> 
           </div>
       </section>
+
+      <section>
+          <div class="categories">
+              <div class="category-header"><h1>Popular <b style="color:#8FC646;">Ingredients</b></h1></div>
+              <div class="category-items">
+                  {% for i in range(4) %}
+                      <div class="category-item">
+                         <img style='width:100%' src="{{results['hits'][i]['recipe']['ingredients'][i]['image']}}" style="width:200px" alt="Item"/>
+                         <h2>Ingredients: {{results['hits'][i]['recipe']['ingredients'][i]['food']}} </h2>
+                         <p><b>Preparation:</b> {{results['hits'][i]['recipe']['ingredients'][i]['text']}} </p>
+                         <p><b>Food Category:</b> {{results['hits'][i]['recipe']['ingredients'][i]['foodCategory']}} || 
+                            <b>Weight:</b> {{results['hits'][i]['recipe']['ingredients'][i]['weight']|round(2)}}g </p>
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+      </section>
+{% endblock %}
