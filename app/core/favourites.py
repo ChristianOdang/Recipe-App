@@ -12,7 +12,6 @@ def getfirst_item():
 
     # close session
     session.close()
-
     # return object
     return results
 
