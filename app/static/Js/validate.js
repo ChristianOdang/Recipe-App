@@ -102,3 +102,64 @@ search_btn.addEventListener("click", (e) => {
       });
   }
 });
+
+// helper functions
+/**
+ * 
+ * @param {string} msg
+ */
+function display_hint(msg) {
+  const span = document.createElement('span');
+  span.setAttribute('class', 'close-alert');
+  span.innerHTML = '<i class="fa fa-info"></i>';
+  span.setAttribute('onclick', "this.parentElement.style.display='none'");
+  alert.style.animation = 'fade-in 1s';
+  alert.style.background = 'rgb(57,136,60,0.5)';
+
+
+  const p = document.createElement("p");
+  p.innerHTML = msg;
+  p.style.background = "rgb(143,198,70,0.5)";
+  alert.appendChild(span);
+  alert.appendChild(p);
+}
+
+function display_error(msg) {
+  const span = document.createElement('span');
+  span.setAttribute('class', 'close-alert');
+
+  span.innerHTML = '<i class="fa fa-times"></i>';
+  span.setAttribute('onclick', "this.parentElement.style.display='none'")
+  alert.style.animation = 'fade-in 1s';
+  const p = document.createElement('p');
+  p.style.background = 'rgb(213,0,0,0.5)';
+  alert.style.background = 'rgb(160,0,0,0.5)';
+
+  p.innerHTML = msg;
+  alert.appendChild(span);
+  alert.appendChild(p);
+  span.setAttribute('onclick', "this.parentElement.style.display='none'");
+}
+
+const isRequired = value => value === '' ? false : true;
+
+/**
+ * @function isSpecialCharacters
+ * @param {String} password
+ * @returns
+ */
+const isSpecialCharacters = (search) => {
+  const re = new RegExp("^(?=.*[!@#$%_+?,'`();:^&*])");
+  return re.test(search);
+}
+
+/**
+ * @function isNumeric
+ * @param {String} password
+ * @returns
+ */
+const isNumeric = (password) => {
+  const re = new RegExp("^(?=.*[0-9])");
+  return re.test(password);
+}
+
