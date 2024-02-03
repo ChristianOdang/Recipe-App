@@ -124,25 +124,24 @@ function displayCart() {
 // send local storage data to backend
 // add url to the cart li
 function send_cart_to_backend() {
-  const add_href = document.getElementById('cart');
-  add_href.style.cursor = 'pointer';
-  add_href.addEventListener('click', () => {
+  const add_href = document.getElementById("cart");
+  add_href.style.cursor = "pointer";
+  add_href.addEventListener("click", () => {
     data_to_send = getCartFromStorage();
-    fetch('/cart', {
-      method: 'POST',
+    fetch("/cart", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data_to_send),
-
-    }).then(response => {
+    }).then((response) => {
       if (response.redirected) {
         window.location.href = response.url;
       } else {
         response.json();
       }
     });
-  })
+  });
 }
 /**
  * @function update_cart_from_storage
@@ -154,5 +153,72 @@ function send_cart_to_backend() {
 function update_cart_from_storage() {
   // create an array from page url value
   let cart_uri = [];
-  const cart_temp = document.querySelectorAll('#cart-uri');
+  const cart_temp = document.querySelectorAll("#cart-uri");
+
+  cart_temp.forEach((item) => {
+    cart_uri.push(item.href);
+  });
+
+  // create an array from storage value
+  const cart_value = [];
+  const stored_data = getCartFromStorage();
+  for (let [key, value] of Object.entries(stored_data)) {
+    cart_value.push(value);
+  }
+
+  //loop through the query
+  for (let i = 0; i < cart_uri.length; i++) {
+    const cart_counter_temp = document.querySelectorAll(".cart-counter");
+    cart_counter_temp[i].textContent = cart_value[i];
+    cart_counter_temp[i].style.color = "#ffffff";
+
+    if (Number(cart_value[i]) < 1 || cart_value[i] === undefined) {
+      // post cart to backend
+      data_to_send = getCartFromStorage();
+      fetch("/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data_to_send),
+      }).then((response) => {
+        // go to a new location base on response
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else {
+          response.json();
+        }
+      });
+    }
+  }
+}
+
+/**
+ * @function Remove cart caller
+ * @param {} None
+ * @returns None
+ * @description This method decrement the value for every item
+ */
+function remove_cart() {
+  // query all button with id
+  const remove_cart_item_btn = document.querySelectorAll(
+    "#remove-cart-item-btn"
+  );
+
+  // if not empty
+  if (remove_cart_item_btn) {
+    // iterate over and remove item based on button clicked
+    remove_cart_item_btn.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        // prevent btn from submission
+        e.preventDefault();
+
+        // method call
+        removeItemfromCart(item.value);
+
+        // show the number of item in cart
+        update_cart_from_storage();
+      });
+    });
+  }
 }
