@@ -222,3 +222,55 @@ function remove_cart() {
     });
   }
 }
+
+/**
+ * @function send_fav_to_backend
+ * @param {} None
+ * @returns None
+ * @description send favourite item to DB
+ */
+function send_fav_to_backend(value) {
+  // send post to db
+  fetch("/browse", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(value),
+  }).then((response) => {
+    if (response.redirected) {
+      window.location.href = response.url;
+    } else {
+      response.json();
+    }
+  });
+}
+
+const fav_button = document.querySelectorAll("#fav-btn");
+
+if (fav_button) {
+  for (const [key, value] of Object.entries(fav_button)) {
+    value.addEventListener("click", (e) => {
+      document.querySelectorAll(".cart-counter")[key].innerHTML = "";
+      // send_fav_to_backend
+      const value_str = String(value.value);
+
+      // this keep throwing
+      send_fav_to_backend(value_str);
+      // item added successfully
+
+      let fav_response = documnet.querySelectorAll(".cart-counter");
+      let fav_i = document.createElement("i");
+      fav_i.style.color = "#ffffff";
+      fav_i.style.animation = "cart-fader 1s";
+      fav_i.setAttribute("class", "fa fa-heart");
+      fav_response[key].appendChild(fav_i);
+    });
+  }
+}
+
+// method calls
+displayCart();
+send_cart_to_backend();
+update_cart_from_storage();
+remove_cart();
