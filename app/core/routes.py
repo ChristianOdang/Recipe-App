@@ -186,3 +186,86 @@ def favourite():
         return render_template('favourite/home.html', results=api_data)
     except:
         return render_template('error/404.html')
+
+@bp.route('/remove_favourite', methods=['POST'])
+def remove_fav():
+    try:
+        # get from uri from
+        uri = request.form['favourite-id']
+        
+        # remove item from favourite
+        favourites.remove_uri(uri)
+        
+        # redirect method
+        return favourite()
+    except:
+        return render_template('error/404.html')
+    
+def querry_api(querry_string=None, select_category=None):
+    # get API pram from env
+    app_key = os.getenv('API_KEY')
+    app_id = os.getenv('API_ID')
+    
+    # process url for api query
+    param = {
+        'app_id' : app_id,
+        'api_key': app_key
+    } 
+    
+    # format url for api query
+    if select_category == '0':
+        base_url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&q={}'.format(app_id,app_key,querry_string)  
+    elif select_category == '1':
+        base_url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&cuisineType={}'.format(app_id,app_key,querry_string)
+    elif select_category == '2':
+        base_url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&diet={}'.format(app_id,app_key,querry_string)
+    elif select_category == '3':
+        base_url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&ingr={}'.format(app_id,app_key,querry_string)
+    else:
+        base_url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&diet=balanced'.format(app_id,app_key)    
+    
+    try:
+        # querry api
+        resp = requests.get(base_url, params=param)
+        
+        # convert to json
+        data = json.loads(resp.text)
+        
+        # return api data
+        return data
+    except requests.exceptions.ConnectionError as e:
+        print('', e)
+        data = {'connection':'Not connected! Please  check your internet connectivity'}
+        return data
+    
+# make api call using uri
+def query_uri(url):
+    
+    # get API pram from env
+    app_key = os.getenv('API_KEY')
+    app_id = os.getenv('API_ID')
+    
+    # processe api param
+    param = {
+        'app_id' : app_id,
+        'api_key' : app_key,
+        'uri' : url
+    }
+    
+    # format base uri
+    base_url = "https://api.edamam.com/api/recipes/v2/by-uri?type=public&app_id={}&app_key={}&uri={}".format(app_id,app_key,url)
+    
+    try:
+        # make API call
+        resp = requests.get(base_url, params=param)
+        
+        # convert to json
+        data = json.loads(resp.text)
+        
+        # return data
+        return data
+    except requests.exceptions.ConnectionError as e:
+        print('', e)
+        data = {'connection': 'Not connection! Please check your internet connectivity'}
+        return data
+    
